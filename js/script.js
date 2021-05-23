@@ -8,11 +8,13 @@ const deliverButton = document.querySelector('#deliver');
 const refuelButton = document.querySelector('#refuel');
 const quitButton = document.querySelector('#quit');
 const restartButton = document.querySelector('#restart');
+const controls = document.querySelector('.controls')
 //do I need to include all of the Tip, Miles, Pizzas, and Warning buttons?
 let milesDisplay = parseInt(document.querySelector('#miles > span').innerHTML);
 let tipsDisplay = parseInt(document.querySelector('#tips > span').innerHTML);
 let warnings = parseInt(document.querySelector('#warnings > span').innerHTML);
 let pizzasLeft = parseInt(document.querySelector('#pizza > span').innerHTML);
+
 
 //GLOBAL VARS
 let orderedPizzas = [
@@ -46,6 +48,10 @@ let deliveredPizzas = [
   'hawaiian'
 ]
 
+// const pizzaShopImg = " ";
+// const houseImg = [ ];
+// const gasStationImg = " ";
+
 //CLASSES
 class Driver {
   constructor(name){
@@ -65,6 +71,7 @@ class Driver {
     //randomizes pizzas? Or is that a different function. Let's do a separate one.
     this.updateMiles();
     this.comparePizzas();
+    // body.style.backgroundImage = random pick from array above
 
 
     //update pizzas left to deliver by one
@@ -77,6 +84,8 @@ class Driver {
     let addedMiles = this.milesLeft += randomMiles;
     document.querySelector('#miles > span').innerHTML = addedMiles;
     this.reduceTips();
+    // body.style.backgroundImage = gasStationImg?????
+
     //if the button is clicked then the tips$ are reduced by (a random amount not more than the amount available in tips$ and not 0 OR a set amount?)
     //updates tips
     //and if button is clicked it updates miles left in tank by random amount (because gas prices fluctuate, yo)
@@ -140,14 +149,17 @@ class Driver {
     //why doesn't this update the 58 in the browser?
 
     if (newMiles <= 0) {
-      alert ("You lost!")
+      alert ("You lost!");
+
     }
     //call reset game
 
   }
+  //????????????????????????????????? need help - go to office hours -
   reduceTips(){
-    let costOfFuel = Math.floor(Math.random() * 10) + 1;
-    //is it possible t0 make sure the costOfGas isn't more than the total tip amount?
+    let costOfFuel = Math.floor(Math.random() * (this.tips - 1 + 1));
+    //is it possible to make sure the costOfGas isn't more than the total tip amount?
+    // let newTipAmount = this.tips -= costOfFuel;
     let newTipAmount = this.tips -= costOfFuel;
     document.querySelector('#tips > span').innerHTML = newTipAmount;
     //reduce the tip amount by random amount not more than total amount
@@ -170,8 +182,9 @@ class Driver {
     alert ("You delivered the wrong pizza. You received a warning from your boss.");
     }
     if (newWarningTotal >= 5) {
-      alert("This is your fifth and final warning. You delivered the wrong pizza too many times. You're fired.")
-      //then call reset function
+      alert("This is your fifth and final warning. You delivered the wrong pizza too many times. You're fired.");
+
+      //then call reset function? Or have it go back to the beginning?
     }
   }
 }
@@ -193,41 +206,51 @@ const teo = new Driver('Teo')
 
 
 //FUNCTIONS
+//start game 
 
-//SHOULD THESE GO IN THE CLASS?
+const toggleModal = () => modal.classList.toggle('open');
+
+const startGame = () => {
+  toggleModal();
+} // what does this do?
+
+const openGame = () => {
+   controls.classList.add('open');
+
+   // controlsImg.setAttribute("src", ...???)
+ }
+// const playGame = () => {
+//   modal.classList.remove('open');
+//   body.style.backgroundImage = `url(${backgroundImage...????})`
+// } ////??????????????
 
 
 
 const quit = () => {
+
   //quit game - alert that they quit and go back to modal? Or back to restart()?
+  //do I need this if the eventListener has it go back to modal?
 
 }
 
 
 const restart = () => {
+  restart = location.reload();
+  }
   //resets all numbers to default
-}
+  //reload the current page in the browser
+  //set document.location.href to nothing (i.e. "")
 
-const updateTips = () => {
-
-}
-
-
-
-
-const updatePizzas = () => {
-
-}
-const updateWarnings = () => {
-
-}
 
 
 
 //EVENT LISTENERS
 
 //add eventListener for start - this should remove the modal and show the game with control buttons
-
+// startButton.addEventListener('click', ...???)
+window.onload = () => {
+  startGame();
+}
 deliverButton.addEventListener('click', () => {
   teo.updateMiles();
   teo.comparePizzas();
@@ -235,7 +258,9 @@ deliverButton.addEventListener('click', () => {
 refuelButton.addEventListener('click', () => {
   teo.refuel();
 })
+restartButton.addEventListener("click", restart, false);
+
 
 
 //add eventListener for quit - this should end the game and go back to the modal.
-//add eventListener for restart - this should set everything back to default.
+// quitButton.addEventListener("click", ...) goes back to showing modal with start button.

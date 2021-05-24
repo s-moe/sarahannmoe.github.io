@@ -21,9 +21,9 @@
   div.modal.open {
     visibility: visible;
   }
-  div.modal{
+  /* div.modal{
     visibility: hidden;
-  }
+  } */
 
   div.controls {
     visibility: hidden;

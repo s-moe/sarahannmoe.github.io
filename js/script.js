@@ -48,9 +48,21 @@ let deliveredPizzas = [
   'hawaiian'
 ]
 
-// const pizzaShopImg = " ";
-// const houseImg = [ ];
-// const gasStationImg = " ";
+const backgroundImg = {
+  pizzaShopImg: "https://favpng.com/png_view/cartoon-casual-pizza-physical-shop-pizza-fast-food-italian-cuisine-illustration-png/wLAB2cja",
+  houseImg: ["https://img.favpng.com/12/5/23/framing-architectural-engineering-building-plaster-project-png-favpng-JbGnXXNHrgUbEhXXGZJygxeAr.jpg",
+            "https://img.favpng.com/0/17/1/cartoon-poster-wallpaper-png-favpng-iDn1P8cRta1C2hELsw56fj222.jpg",
+            "https://img.favpng.com/22/11/8/dog-houses-angle-png-favpng-Sji48SYrSQckcgGdbJ0qxryzf.jpg",
+            "https://img.favpng.com/22/24/18/saint-basil-s-cathedral-saint-isaac-s-cathedral-cathedral-of-the-archangel-ivan-the-great-bell-tower-moscow-kremlin-png-favpng-sK5E5cf0DndKmwbfPnQh1Ltgk_t.jpg",
+            "https://img.favpng.com/7/13/17/tent-camping-namib-png-favpng-NQ0URGY5xExdvCUVz3PRTvJBN_t.jpg"
+          ],
+  gasStationImg: "https://images.unsplash.com/photo-1610992448694-4ba8141986ab?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Z2FzJTIwc3RhdGlvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+}
+
+//randomize the houseImg:
+let randomHouseImg = backgroundImg.houseImg[Math.floor(Math.random() * backgroundImg.houseImg.length)];
+
+const pizzaCarImg = "https://img.favpng.com/4/7/23/pizza-delivery-car-pizza-delivery-png-favpng-wHnErXyTBJ1jGcL89s8DRbNLd_t.jpg"
 
 //CLASSES
 class Driver {
@@ -66,17 +78,12 @@ class Driver {
 
   }
   deliver(){
-    //calls drive() method
-    // this.drive();
-    //randomizes pizzas? Or is that a different function. Let's do a separate one.
+
+    body.style.backgroundImage = `url(randomHouseImg)`;
     this.updateMiles();
     this.comparePizzas();
-    // body.style.backgroundImage = random pick from array above
 
 
-    //update pizzas left to deliver by one
-    //if pizzas left to deliver === 0, then you win
-    //I want to make it so you have to drive before you deliver - maybe drive isn't a button but is just a function we call here.
   }
   refuel(){
     this.drive();
@@ -84,11 +91,9 @@ class Driver {
     let addedMiles = this.milesLeft += randomMiles;
     document.querySelector('#miles > span').innerHTML = addedMiles;
     this.reduceTips();
-    // body.style.backgroundImage = gasStationImg?????
+    body.style.backgroundImage = `url(${backgroundImg.gasStationImg})`;
+    //how do I include the pizzaCarImg?????????
 
-    //if the button is clicked then the tips$ are reduced by (a random amount not more than the amount available in tips$ and not 0 OR a set amount?)
-    //updates tips
-    //and if button is clicked it updates miles left in tank by random amount (because gas prices fluctuate, yo)
   }
   drive(){
    this.subtractMiles = Math.floor(Math.random() * 10) + 1;
@@ -96,48 +101,26 @@ class Driver {
 
   }
   comparePizzas(){
-    //create a random string from the deliveredPizzas array
+
     let randomPizza = Math.floor(Math.random() * deliveredPizzas.length);
     let randomDeliveredPizza = deliveredPizzas[randomPizza];
-    // console.log (randomDeliveredPizza)
-    // console.log(randomDeliveredPizza)
-
-    //compare it to the first item in the orderedPizzas array
     let firstOrderedPizza = orderedPizzas[0];
-
-    //if they match, invoke tip()
-
     if (firstOrderedPizza === randomDeliveredPizza) {
       this.tip();
     } else {
       this.warning();
     }
-
-
-    //remove the first item from the orderedPizzas array;
     orderedPizzas.shift();
-    //remove the random string from the deliveredPizzas array
-    // function removeDeliveredPizza(deliveredPizzas, randomDeliveredPizza) {
-    //   for (let i = 0; i < deliveredPizzas.length; i++){
-    //     if (deliveredPizzas[i] === randomDeliveredPizza){
-    //       deliveredPizzas.splice(i, 1);
-    //     }
-    //   }
-    // }
-    // removeDeliveredPizza(deliveredPizzas, randomDeliveredPizza)
-    //array.splice(array.indexOf(memberToRemove), 1)
+
     deliveredPizzas.splice(deliveredPizzas.indexOf(randomDeliveredPizza), 1);
-    // deliveredPizzas.splice(randomDeliveredPizza);
-    // let newDeliveredPizzas = deliveredPizzas.filter(randomDeliveredPizza)
-    // pizzasLeft = pizzasLeft -1;
-    // let newPizzaAmount = this.pizzas - 1
+
     let subPizzas = --this.pizzas;
 
     document.querySelector('#pizza > span').innerHTML = subPizzas;
 
     if(subPizzas <= 0) {
       alert ("You won! Congrats!")
-    }
+    } //some way to go back to the modal - toggleModal?
 
   }
 
@@ -145,14 +128,11 @@ class Driver {
     this.drive();
     let newMiles = this.milesLeft -= this.subtractMiles;
     document.querySelector('#miles > span').innerHTML = newMiles;
-    // milesDisplay = newMiles;
-    //why doesn't this update the 58 in the browser?
 
     if (newMiles <= 0) {
       alert ("You lost!");
-
     }
-    //call reset game
+    //call back to modal?
 
   }
   //????????????????????????????????? need help - go to office hours -
@@ -165,17 +145,17 @@ class Driver {
     //reduce the tip amount by random amount not more than total amount
     if (newTipAmount <= 0) {
       alert ("You lost!")
-    }
+    } // back to modal???
   }
 
   tip(){
     let addTip = Math.floor(Math.random() * 10) + 1;
     let addedTipAmount = this.tips += addTip;
     document.querySelector('#tips > span').innerHTML = addedTipAmount;
-    //creates random amount for tip with no remainder. Updates tips$
   }
 
   warning(){
+
     let newWarningTotal = this.warnings +=1;
     document.querySelector('#warnings > span').innerHTML = newWarningTotal;
     if (newWarningTotal <=4){
@@ -183,8 +163,7 @@ class Driver {
     }
     if (newWarningTotal >= 5) {
       alert("This is your fifth and final warning. You delivered the wrong pizza too many times. You're fired.");
-
-      //then call reset function? Or have it go back to the beginning?
+      //then call and go back to the beginning/modal
     }
   }
 }
@@ -206,7 +185,7 @@ const teo = new Driver('Teo')
 
 
 //FUNCTIONS
-//start game 
+//start game
 
 const toggleModal = () => modal.classList.toggle('open');
 
@@ -215,10 +194,21 @@ const startGame = () => {
 } // what does this do?
 
 const openGame = () => {
-   controls.classList.add('open');
+  modal.classList.remove('open')
+  controls.classList.add('open');
+  body.style.backgroundImage = `url(${backgroundImg.pizzaShopImg})`;
+  //how do I also get the car to appear on top?
 
-   // controlsImg.setAttribute("src", ...???)
+//     const openCarousel = () => {
+//     carousel.classList.add('open');
+//     carouselImg.setAttribute("src", backgroundImage[currentSlide]);
+//     toggleModal();
+// }
  }
+
+
+
+
 // const playGame = () => {
 //   modal.classList.remove('open');
 //   body.style.backgroundImage = `url(${backgroundImage...????})`
@@ -251,6 +241,13 @@ const restart = () => {
 window.onload = () => {
   startGame();
 }
+//when start is clicked the modal disappears
+//and the other div with the buttons, stats, and images appears
+startButton.addEventListener('click', () => {
+  openGame();
+  // toggleModal closed?
+})
+
 deliverButton.addEventListener('click', () => {
   teo.updateMiles();
   teo.comparePizzas();

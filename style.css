@@ -20,15 +20,48 @@
   } */
   div.modal.open {
     visibility: visible;
+    background-color: grey;
+    width: 70vw;
+    max-width: 400px;
+    position: fixed;
+    top: 45%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+
   }
-  /* div.modal{
+  div.modal{
     visibility: hidden;
-  } */
+  }
 
   div.controls {
     visibility: hidden;
+    background-color: pink;
   }
 
   div.controls.open {
+    visibility: visible;
+  }
+
+  div.stats{
+    visibility: hidden;
+    background-color: yellow;
+  }
+
+  div.stats.open {
+    visibility: visible;
+
+  }
+
+  div.container {
+    background-color: blue;
+    visibility: hidden;
+  }
+
+  div.container.open {
+    background-color: blue;
     visibility: visible;
   }

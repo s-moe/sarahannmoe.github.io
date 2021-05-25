@@ -9,6 +9,8 @@ const refuelButton = document.querySelector('#refuel');
 const quitButton = document.querySelector('#quit');
 const restartButton = document.querySelector('#restart');
 const controls = document.querySelector('.controls')
+const stats = document.querySelector('.stats')
+const container = document.querySelector('.container')
 //do I need to include all of the Tip, Miles, Pizzas, and Warning buttons?
 let milesDisplay = parseInt(document.querySelector('#miles > span').innerHTML);
 let tipsDisplay = parseInt(document.querySelector('#tips > span').innerHTML);
@@ -91,7 +93,7 @@ class Driver {
     let addedMiles = this.milesLeft += randomMiles;
     document.querySelector('#miles > span').innerHTML = addedMiles;
     this.reduceTips();
-    body.style.backgroundImage = `url(${backgroundImg.gasStationImg})`;
+    // body.style.backgroundImage = `url(${backgroundImg.gasStationImg})`;
     //how do I include the pizzaCarImg?????????
 
   }
@@ -131,21 +133,23 @@ class Driver {
 
     if (newMiles <= 0) {
       alert ("You lost!");
+      restart();
     }
     //call back to modal?
 
   }
   //????????????????????????????????? need help - go to office hours -
   reduceTips(){
-    let costOfFuel = Math.floor(Math.random() * (this.tips - 1 + 1));
+    let costOfFuel = Math.floor(Math.random() * (this.tips - 1) + 1);
     //is it possible to make sure the costOfGas isn't more than the total tip amount?
     // let newTipAmount = this.tips -= costOfFuel;
     let newTipAmount = this.tips -= costOfFuel;
     document.querySelector('#tips > span').innerHTML = newTipAmount;
     //reduce the tip amount by random amount not more than total amount
     if (newTipAmount <= 0) {
-      alert ("You lost!")
-    } // back to modal???
+      alert ("You lost!");
+      restart();
+    }
   }
 
   tip(){
@@ -163,6 +167,7 @@ class Driver {
     }
     if (newWarningTotal >= 5) {
       alert("This is your fifth and final warning. You delivered the wrong pizza too many times. You're fired.");
+      restart();
       //then call and go back to the beginning/modal
     }
   }
@@ -191,11 +196,14 @@ const toggleModal = () => modal.classList.toggle('open');
 
 const startGame = () => {
   toggleModal();
+
 } // what does this do?
 
 const openGame = () => {
-  modal.classList.remove('open')
+  modal.classList.remove('open');
   controls.classList.add('open');
+  stats.classList.add('open');
+  container.classList.add('open');
   body.style.backgroundImage = `url(${backgroundImg.pizzaShopImg})`;
   //how do I also get the car to appear on top?
 
@@ -216,36 +224,30 @@ const openGame = () => {
 
 
 
-const quit = () => {
-
-  //quit game - alert that they quit and go back to modal? Or back to restart()?
-  //do I need this if the eventListener has it go back to modal?
-
-}
+// const quit = () => {
+//   modal.classList.add('open');
+//   controls.classList.remove('open');
+//   stats.classList.remove('open');
+//   //quit game - alert that they quit and go back to modal? Or back to restart()?
+//   //do I need this if the eventListener has it go back to modal?
+//
+// }
 
 
 const restart = () => {
   restart = location.reload();
   }
-  //resets all numbers to default
-  //reload the current page in the browser
-  //set document.location.href to nothing (i.e. "")
-
 
 
 
 //EVENT LISTENERS
 
-//add eventListener for start - this should remove the modal and show the game with control buttons
-// startButton.addEventListener('click', ...???)
 window.onload = () => {
   startGame();
 }
-//when start is clicked the modal disappears
-//and the other div with the buttons, stats, and images appears
+
 startButton.addEventListener('click', () => {
   openGame();
-  // toggleModal closed?
 })
 
 deliverButton.addEventListener('click', () => {
@@ -255,9 +257,8 @@ deliverButton.addEventListener('click', () => {
 refuelButton.addEventListener('click', () => {
   teo.refuel();
 })
-restartButton.addEventListener("click", restart, false);
-
-
-
-//add eventListener for quit - this should end the game and go back to the modal.
-// quitButton.addEventListener("click", ...) goes back to showing modal with start button.
+restartButton.addEventListener('click', restart, false);
+quitButton.addEventListener('click', () => {
+  // quit();
+  restart();
+})

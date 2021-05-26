@@ -5,10 +5,28 @@
     background-size: cover;
     background-repeat: no-repeat;
     color: black;
+    /* background-image: url(https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500); */
 
 
     /* //I want to make the background color the same color the whole time */
 }
+
+div.background > img {
+  display: none;
+}
+div.background.open > img {
+  display: block;
+  height: 100%;
+  width:100%;
+}
+/* div.background{
+  display: none;
+}
+div.background.open{
+  display: block;
+  background-size: cover;
+
+} */
 
 /* .refuel {
 //I want each of these backgrounds to be enclosed in a container of some kind

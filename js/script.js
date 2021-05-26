@@ -11,7 +11,10 @@ const restartButton = document.querySelector('#restart');
 const controls = document.querySelector('.controls')
 const stats = document.querySelector('.stats')
 const imageContainer = document.querySelector('.image-container')
-const changingBackground = document.querySelector('.image-container img')
+let changingBackground = document.querySelector('.image-container img')
+const startingImg = document.querySelector('.background')
+// const background = document.querySelector('.background > img')
+// const characterImg = document.querySelector('.pizza-car img')
 //do I need to include all of the Tip, Miles, Pizzas, and Warning buttons?
 let milesDisplay = parseInt(document.querySelector('#miles > span').innerHTML);
 let tipsDisplay = parseInt(document.querySelector('#tips > span').innerHTML);
@@ -52,20 +55,18 @@ let deliveredPizzas = [
 ]
 
 const backgroundImg = {
-  pizzaShopImg: "https://image.shutterstock.com/image-illustration/front-view-pizza-shop-restaurant-260nw-1575914101.jpg",
-  houseImg: ["https://img.favpng.com/12/5/23/framing-architectural-engineering-building-plaster-project-png-favpng-JbGnXXNHrgUbEhXXGZJygxeAr.jpg",
-            "https://img.favpng.com/0/17/1/cartoon-poster-wallpaper-png-favpng-iDn1P8cRta1C2hELsw56fj222.jpg",
-            "https://img.favpng.com/22/11/8/dog-houses-angle-png-favpng-Sji48SYrSQckcgGdbJ0qxryzf.jpg",
-            "https://img.favpng.com/22/24/18/saint-basil-s-cathedral-saint-isaac-s-cathedral-cathedral-of-the-archangel-ivan-the-great-bell-tower-moscow-kremlin-png-favpng-sK5E5cf0DndKmwbfPnQh1Ltgk_t.jpg",
-            "https://img.favpng.com/7/13/17/tent-camping-namib-png-favpng-NQ0URGY5xExdvCUVz3PRTvJBN_t.jpg"
+  pizzaShopImg: "https://images.pexels.com/photos/1038332/pexels-photo-1038332.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  houseImg: ["https://cdn.pixabay.com/photo/2021/04/25/16/43/lighthouse-6207038_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2018/03/18/15/26/villa-3237114_960_720.jpg",
+            "https://cdn.stocksnap.io/img-thumbs/280h/T0BHAFEFFR.jpg ",
+            "https://cdn.stocksnap.io/img-thumbs/280h/camp-outdoor_AD4M0GTYS8.jpg ",
+            "https://cdn.pixabay.com/photo/2015/05/29/17/39/noble-789501__340.jpg"
           ],
-  gasStationImg: "https://images.unsplash.com/photo-1610992448694-4ba8141986ab?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Z2FzJTIwc3RhdGlvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+  gasStationImg: "https://images.unsplash.com/photo-1610992448694-4ba8141986ab?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Z2FzJTIwc3RhdGlvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+  modalBackgroundImg: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 }
 
-//randomize the houseImg:
-let randomHouseImg = backgroundImg.houseImg[Math.floor(Math.random() * backgroundImg.houseImg.length)];
 
-const pizzaCarImg = "https://img.favpng.com/4/7/23/pizza-delivery-car-pizza-delivery-png-favpng-wHnErXyTBJ1jGcL89s8DRbNLd_t.jpg"
 
 //CLASSES
 class Driver {
@@ -76,19 +77,21 @@ class Driver {
     this.tips = 0;
     this.warnings = 0;
     this.pizzas = 12;
+    this.image = "https://img.favpng.com/4/7/23/pizza-delivery-car-pizza-delivery-png-favpng-wHnErXyTBJ1jGcL89s8DRbNLd_t.jpg"
     // do I need to connect this to milesDisplay from the cached dom above?
     //for example, could this.tips = tipsDisplay ???????
 
   }
   deliver(){
 
-    body.style.backgroundImage = `url(randomHouseImg)`;
+    // body.style.backgroundImage = `url(randomHouseImg)`;
     this.updateMiles();
     this.comparePizzas();
 
 
   }
   refuel(){
+    changingBackground.setAttribute("src", backgroundImg.gasStationImg);
     this.drive();
     let randomMiles = Math.floor(Math.random() * 10) + 1;
     let addedMiles = this.milesLeft += randomMiles;
@@ -133,10 +136,9 @@ class Driver {
     document.querySelector('#miles > span').innerHTML = newMiles;
 
     if (newMiles <= 0) {
-      alert ("You lost!");
+      alert ("You lost! You didn't have enough gas to make the delivery.");
       restart();
     }
-    //call back to modal?
 
   }
   //????????????????????????????????? need help - go to office hours -
@@ -148,7 +150,7 @@ class Driver {
     document.querySelector('#tips > span').innerHTML = newTipAmount;
     //reduce the tip amount by random amount not more than total amount
     if (newTipAmount <= 0) {
-      alert ("You lost!");
+      setTimeout(function(){ alert("You lost! You didn't have enough money to fill your tank."); }, 1000);
       restart();
     }
   }
@@ -159,17 +161,18 @@ class Driver {
     document.querySelector('#tips > span').innerHTML = addedTipAmount;
   }
 
+
   warning(){
 
     let newWarningTotal = this.warnings +=1;
     document.querySelector('#warnings > span').innerHTML = newWarningTotal;
+    let calcWarn = (5 - newWarningTotal);
     if (newWarningTotal <=4){
-    alert ("You delivered the wrong pizza. You received a warning from your boss.");
+      setTimeout(function(){ alert(`You delivered the wrong pizza. You received a warning from your boss. You only have ${calcWarn} warnings left before you are fired.`); }, 700);
     }
     if (newWarningTotal >= 5) {
-      alert("This is your fifth and final warning. You delivered the wrong pizza too many times. You're fired.");
+      alert("You're fired. You delivered the wrong pizza too many times.");
       restart();
-      //then call and go back to the beginning/modal
     }
   }
 }
@@ -178,22 +181,15 @@ class Driver {
 const teo = new Driver('Teo')
 
 
-// class Customer{
-//   constructor(name){
-//     this.name = name;
-//   }
-// ???? I wanted to have the customer tip the driver - so if the correct pizza was received then it would invoke this mthod of tipping.
-// }
-// const Cat = new Customer('Cat')
-
-
-
-
-
 //FUNCTIONS
 //start game
 
-const toggleModal = () => modal.classList.toggle('open');
+const toggleModal = () => {
+  startingImg.classList.add('open');
+  modal.classList.toggle('open');
+//or should the background img go here?
+  // background.setAttribute("src", backgroundImg.modalBackgroundImg);
+}
 
 const startGame = () => {
   toggleModal();
@@ -201,11 +197,16 @@ const startGame = () => {
 } // what does this do?
 
 const openGame = () => {
+  //do I now need to remove the background classList?
+  startingImg.classList.remove('open');
   modal.classList.remove('open');
   controls.classList.add('open');
   stats.classList.add('open');
   imageContainer.classList.add('open');
   changingBackground.setAttribute("src", backgroundImg.pizzaShopImg)
+  //toggle the background image off?
+
+  // characterImg.setAttribute("src", pizzaCarImg)
   // body.style.backgroundImage = `url(${backgroundImg.pizzaShopImg})`;
   //how do I also get the car to appear on top?
 
@@ -238,11 +239,23 @@ const openGame = () => {
 
 const restart = () => {
   restart = location.reload();
+  // toggleModal();
+  //do I need the image here?
+
   }
 
+changeImg = () => {
+  let randomHouseImg = backgroundImg.houseImg[Math.floor(Math.random() * backgroundImg.houseImg.length)];
+  changingBackground.setAttribute("src", randomHouseImg)
+};
+
+//fill up tank to 300
 
 
 //EVENT LISTENERS
+//secret fill up tank event listener????
+//gives alert: "Super secret gas tank filler-upper has been activated"
+//call a function that fills up gas tank to 300, with delay for after alert
 
 window.onload = () => {
   startGame();
@@ -253,6 +266,7 @@ startButton.addEventListener('click', () => {
 })
 
 deliverButton.addEventListener('click', () => {
+  changeImg();
   teo.updateMiles();
   teo.comparePizzas();
 });

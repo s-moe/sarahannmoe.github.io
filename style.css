@@ -1,13 +1,16 @@
-/* body {
-    background-image: url(https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGl6emElMjBkZWxpdmVyeXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60);
-    font-family: "Open Sans", sans-serif;
+
+ body {
+    /* background-image: url(https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGl6emElMjBkZWxpdmVyeXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60); */
+    font-family: "Helvetica", sans-serif;
     background-size: cover;
     background-repeat: no-repeat;
-    color: white;
-    //I want to make the background color the same color the whole time
+    color: black;
+
+
+    /* //I want to make the background color the same color the whole time */
 }
 
-.refuel {
+/* .refuel {
 //I want each of these backgrounds to be enclosed in a container of some kind
 //so they don't take up the whole background
   background-repeat: no-repeat;
@@ -19,7 +22,7 @@
 
   } */
   div.modal.open {
-    visibility: visible;
+    display: block;
     background-color: grey;
     width: 70vw;
     max-width: 400px;
@@ -34,34 +37,82 @@
 
   }
   div.modal{
-    visibility: hidden;
+    display: none;
+  }
+  div.box1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 1vh;
+    padding: 25px;
+
+    /* align-items: stretch; */
+
   }
 
   div.controls {
     visibility: hidden;
-    background-color: pink;
+
+
+    /* background-color: pink; */
+
+
   }
 
   div.controls.open {
     visibility: visible;
+    background-color: pink;
+    /* display: flex;
+    justify-content: space-around; */
+
+
+
   }
 
   div.stats{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 60vh;
+    width: 100px;
+    padding: 10px;
     visibility: hidden;
     background-color: yellow;
+
   }
 
-  div.stats.open {
+  div.stats.open{
     visibility: visible;
+    /* justify-content: space-around; */
 
   }
-
-  div.container {
-    background-color: blue;
-    visibility: hidden;
+  div.image-container{
+    display: none;
   }
 
-  div.container.open {
-    background-color: blue;
-    visibility: visible;
+  div.image-container.open{
+    display: inline;
+    background-color: green;
+    height: 60vh;
+    max-width: 700px;
+    position: fixed;
+    top: 45%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    margin:0 auto;
+    border-radius: 4px;
+    padding: 35px;
+    box-shadow: 5px 2.5px 10px 0px rgba(0,0,0,0.3);
+    text-align: center;
+    /* z-index: 99; */
+  }
+  div.image-container > img{
+    width: 100%;
+    margin: 60px 0;
+  }
+
+  div.pizza-car > img{
+    width: 50%;
+    margin: 30px 0;
   }

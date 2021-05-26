@@ -10,7 +10,8 @@ const quitButton = document.querySelector('#quit');
 const restartButton = document.querySelector('#restart');
 const controls = document.querySelector('.controls')
 const stats = document.querySelector('.stats')
-const container = document.querySelector('.container')
+const imageContainer = document.querySelector('.image-container')
+const changingBackground = document.querySelector('.image-container img')
 //do I need to include all of the Tip, Miles, Pizzas, and Warning buttons?
 let milesDisplay = parseInt(document.querySelector('#miles > span').innerHTML);
 let tipsDisplay = parseInt(document.querySelector('#tips > span').innerHTML);
@@ -51,7 +52,7 @@ let deliveredPizzas = [
 ]
 
 const backgroundImg = {
-  pizzaShopImg: "https://favpng.com/png_view/cartoon-casual-pizza-physical-shop-pizza-fast-food-italian-cuisine-illustration-png/wLAB2cja",
+  pizzaShopImg: "https://image.shutterstock.com/image-illustration/front-view-pizza-shop-restaurant-260nw-1575914101.jpg",
   houseImg: ["https://img.favpng.com/12/5/23/framing-architectural-engineering-building-plaster-project-png-favpng-JbGnXXNHrgUbEhXXGZJygxeAr.jpg",
             "https://img.favpng.com/0/17/1/cartoon-poster-wallpaper-png-favpng-iDn1P8cRta1C2hELsw56fj222.jpg",
             "https://img.favpng.com/22/11/8/dog-houses-angle-png-favpng-Sji48SYrSQckcgGdbJ0qxryzf.jpg",
@@ -203,8 +204,9 @@ const openGame = () => {
   modal.classList.remove('open');
   controls.classList.add('open');
   stats.classList.add('open');
-  container.classList.add('open');
-  body.style.backgroundImage = `url(${backgroundImg.pizzaShopImg})`;
+  imageContainer.classList.add('open');
+  changingBackground.setAttribute("src", backgroundImg.pizzaShopImg)
+  // body.style.backgroundImage = `url(${backgroundImg.pizzaShopImg})`;
   //how do I also get the car to appear on top?
 
 //     const openCarousel = () => {

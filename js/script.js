@@ -10,11 +10,13 @@ const quitButton = document.querySelector('#quit');
 const restartButton = document.querySelector('#restart');
 const controls = document.querySelector('.controls')
 const stats = document.querySelector('.stats')
+//change this to document..... down below and include url instead of src
 const imageContainer = document.querySelector('.image-container')
-let changingBackground = document.querySelector('.image-container img')
+// let changingBackground = document.querySelector('.image-container img')
 const startingImg = document.querySelector('.background')
+
 // const background = document.querySelector('.background > img')
-// const characterImg = document.querySelector('.pizza-car img')
+let characterImg = document.querySelector('div.character > img')
 //do I need to include all of the Tip, Miles, Pizzas, and Warning buttons?
 let milesDisplay = parseInt(document.querySelector('#miles > span').innerHTML);
 let tipsDisplay = parseInt(document.querySelector('#tips > span').innerHTML);
@@ -28,12 +30,12 @@ let orderedPizzas = [
   'hawaiian',
   'pepperoni',
   'cheese',
-  'combo',
-  'cheese',
+  'hawaiian',
+  'pepperoni',
   'pepperoni',
   'pepperoni',
   'hawaiian',
-  'combo',
+  'pepperoni',
   'pepperoni',
   'hawaiian'
 ]
@@ -44,12 +46,12 @@ let deliveredPizzas = [
   'hawaiian',
   'pepperoni',
   'cheese',
-  'combo',
-  'cheese',
+  'hawaiian',
+  'pepperoni',
   'pepperoni',
   'pepperoni',
   'hawaiian',
-  'combo',
+  'pepperoni',
   'pepperoni',
   'hawaiian'
 ]
@@ -65,6 +67,12 @@ const backgroundImg = {
   gasStationImg: "https://images.unsplash.com/photo-1610992448694-4ba8141986ab?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Z2FzJTIwc3RhdGlvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
   modalBackgroundImg: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 }
+const characterImage = "https://www.digitalscrapbook.com/sites/default/files/styles/456_scale/public/s3fs-user-content/graphic-image/user-310/node-147405/pizza-delivery-car-graphic-food-illustration-red-yellow-black.png"
+
+// let pattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+// let current = 0;
+
+  // changingBackground.setAttribute("src", randomHouseImg)
 
 
 
@@ -77,28 +85,28 @@ class Driver {
     this.tips = 0;
     this.warnings = 0;
     this.pizzas = 12;
-    this.image = "https://img.favpng.com/4/7/23/pizza-delivery-car-pizza-delivery-png-favpng-wHnErXyTBJ1jGcL89s8DRbNLd_t.jpg"
-    // do I need to connect this to milesDisplay from the cached dom above?
-    //for example, could this.tips = tipsDisplay ???????
+
 
   }
   deliver(){
 
-    // body.style.backgroundImage = `url(randomHouseImg)`;
+
     this.updateMiles();
     this.comparePizzas();
 
 
+
   }
   refuel(){
-    changingBackground.setAttribute("src", backgroundImg.gasStationImg);
+
+    imageContainer.style.backgroundImage = `url(${backgroundImg.gasStationImg})`;
     this.drive();
     let randomMiles = Math.floor(Math.random() * 10) + 1;
-    let addedMiles = this.milesLeft += randomMiles;
+    let addedMiles = milesDisplay += randomMiles;
+    // let addedMiles = this.milesLeft += randomMiles;
     document.querySelector('#miles > span').innerHTML = addedMiles;
     this.reduceTips();
-    // body.style.backgroundImage = `url(${backgroundImg.gasStationImg})`;
-    //how do I include the pizzaCarImg?????????
+
 
   }
   drive(){
@@ -131,12 +139,14 @@ class Driver {
   }
 
   updateMiles(){
+
     this.drive();
-    let newMiles = this.milesLeft -= this.subtractMiles;
+    let newMiles = milesDisplay -= this.subtractMiles;
+    // let newMiles = this.milesLeft -= this.subtractMiles;
     document.querySelector('#miles > span').innerHTML = newMiles;
 
     if (newMiles <= 0) {
-      alert ("You lost! You didn't have enough gas to make the delivery.");
+      alert ("You lost! You ran out of gas.");
       restart();
     }
 
@@ -150,7 +160,7 @@ class Driver {
     document.querySelector('#tips > span').innerHTML = newTipAmount;
     //reduce the tip amount by random amount not more than total amount
     if (newTipAmount <= 0) {
-      setTimeout(function(){ alert("You lost! You didn't have enough money to fill your tank."); }, 1000);
+      alert("You lost! You don't have enough cash for gas.");
       restart();
     }
   }
@@ -183,6 +193,24 @@ const teo = new Driver('Teo')
 
 //FUNCTIONS
 //start game
+// const easterEgg = function (event) {
+//   if (pattern.indexOf(event.key) < 0 || event.key !== pattern[current]) {
+//     current = 0;
+//     return;
+//   }
+//   current++;
+//   if (pattern.length === current) {
+//     current = 0;
+//     alert("You found it")
+//     // milesDisplay = 400;
+//   }
+//
+//   // document.querySelector('#miles > span').innerHTML = "400"
+// }
+
+const setCharacterImage = () => {
+  characterImg.setAttribute('src', characterImage);
+}
 
 const toggleModal = () => {
   startingImg.classList.add('open');
@@ -196,14 +224,19 @@ const startGame = () => {
 
 } // what does this do?
 
+
 const openGame = () => {
   //do I now need to remove the background classList?
+
   startingImg.classList.remove('open');
   modal.classList.remove('open');
   controls.classList.add('open');
   stats.classList.add('open');
   imageContainer.classList.add('open');
-  changingBackground.setAttribute("src", backgroundImg.pizzaShopImg)
+  imageContainer.style.backgroundImage = `url(${backgroundImg.pizzaShopImg})`
+  // characterImg.classList.add('open');
+  setCharacterImage();
+  // changingBackground.setAttribute("src", backgroundImg.pizzaShopImg)
   //toggle the background image off?
 
   // characterImg.setAttribute("src", pizzaCarImg)
@@ -217,6 +250,10 @@ const openGame = () => {
 // }
  }
 
+ const changeImg = () => {
+   let randomHouseImg = backgroundImg.houseImg[Math.floor(Math.random() * backgroundImg.houseImg.length)];
+   imageContainer.style.backgroundImage = `url(${randomHouseImg})`;
+ }
 
 
 
@@ -244,10 +281,7 @@ const restart = () => {
 
   }
 
-changeImg = () => {
-  let randomHouseImg = backgroundImg.houseImg[Math.floor(Math.random() * backgroundImg.houseImg.length)];
-  changingBackground.setAttribute("src", randomHouseImg)
-};
+
 
 //fill up tank to 300
 
@@ -263,18 +297,29 @@ window.onload = () => {
 
 startButton.addEventListener('click', () => {
   openGame();
-})
+});
 
 deliverButton.addEventListener('click', () => {
   changeImg();
   teo.updateMiles();
   teo.comparePizzas();
 });
+
 refuelButton.addEventListener('click', () => {
   teo.refuel();
-})
+});
+
 restartButton.addEventListener('click', restart, false);
 quitButton.addEventListener('click', () => {
   // quit();
   restart();
-})
+});
+
+document.addEventListener('keydown', function(event) {
+
+  if (event.code === 'KeyW') {
+    milesDisplay += 400;
+    document.querySelector('#miles > span').innerHTML = milesDisplay
+    //but now it reduces the amount significantly after I deliver
+  }
+});

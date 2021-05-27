@@ -9,11 +9,11 @@
   <body>
 
   <div class="background">
-    <img src="https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"/>
+    <img src="https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"/>
   </div>
   <div class="modal">
     <h1>Pizza Delivery</h1>
-    <h4>Can you deliver all of the pizzas without getting fired? Be sure keep an eye on your gas tank!</h4>
+    <h4>Can you deliver all of the pizzas without getting fired or running out of gas? Click "Start" to play!</h4>
     <button class="btn" id="start">Start</button>
     <!-- modal to start with instructions, start button be sure to include all of this in js cached doms -->
   </div>
@@ -25,18 +25,19 @@
       <!-- <div class = "drive">
           <button class = "drive btn">Drive</button>
       </div> -->
-      <div class="deliver">
-          <button class= "btn" id="deliver">Deliver</button>
-      </div>
-      <div class="refuel">
-          <button class="btn" id="refuel">Refuel</button>
-      </div>
-      <div class="quit">
-        <button class="btn" id="quit">Quit</button>
-      </div>
-      <div class="restart">
-        <button class="btn" id="restart">Restart</button>
-      </div>
+
+
+          <button class= "btn deliver flex-item" id="deliver">Deliver</button>
+
+
+          <button class="btn refuel flex-item" id="refuel">Refuel</button>
+
+
+        <button class="btn quit flex-item" id="quit">Quit</button>
+
+
+        <button class="btn restart flex-item" id="restart">Restart</button>
+
     </div>
 
 
@@ -47,10 +48,10 @@
         Tips: $ <span>0</span>
       </div>
       <div class="btn" id="miles">
-        Miles left in tank: <span>20</span>
+        Miles left in tank: <span> 34 </span>
       </div>
       <div class="btn" id="pizza">
-        Pizzas left to deliver: <span>12</span>
+        Pizzas left to deliver: <span> 12 </span>
       </div>
       <div class="btn" id="warnings">
         Warnings: <span>0</span>
@@ -60,12 +61,23 @@
   <!-- <div class = "container">
     <img/>
   </div> -->
+
   <div class="image-container">
-    <img/>
-  <div class="pizza-car">
+    <div class="character">
+      <img/>
+    </div>
+  </div>
+
+
+
+  <!-- <div class="image-container">
     <img/>
   </div>
-  </div>
+
+  <div class="character">
+    <img/>
+  </div> -->
+
 
     <script src="js/script.js"></script>
   </body>
